@@ -1,3 +1,9 @@
+data/
+client/public/dmTokens
+client/public/tokens
+client/public/maps
+client/public/export
+
 # Logs
 logs
 *.log

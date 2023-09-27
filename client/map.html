@@ -1,0 +1,306 @@
+<html data-bs-theme="dark">
+    <head>
+        <title>Map view</title>
+        <meta charset="utf-8">
+        <link rel="icon" href="images/Favicon.png">
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' >
+        <link rel="stylesheet" href="icons.css">
+        <link href="bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <script src="bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="map.css">
+    </head>
+    
+    <body>
+        <div id="bulkTokenBox" class="position-fixed bottom-0" style="z-index: 10000;">
+            <div id="bulkTokenBoxCollapse" class="collapse">
+                <div class="card">
+                    <div class="card-header d-flex p-0">
+                        <div id="bulkTokenBoxHeader" class="text-center p-1 flex-fill">Bulk Token Generator</div>
+                        <button class="btn p-0 m-1" type="button" data-bs-toggle="collapse" data-bs-target="#bulkTokenBoxCollapse"><i class="bi-x-square fs-5"></i></button>
+                    </div>
+                   
+                   <div id="bulkTokenBoxBody" class="card-body p-0">
+                        <div class="d-flex flex-column gap-2 m-1">
+                            <div class="input-group">
+                                <label class="input-group-text" for="bulkTokenImageSelect"><i class="bi-image"></i></label>
+                                <select class="form-select" id="bulkTokenImageSelect"></select>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-group-text" for="bulkTokenNameInput"><i class="bi-person-fill"></i></label>
+                                <input class="form-control text-center" type="text" id="bulkTokenNameInput" autocomplete="off" spellcheck="false" placeholder="Shared name"></select>
+                                <label class="input-group-text" for="bulkTokenAmountInput"><i class="bi-ui-radios-grid"></i></label>
+                                <input class="form-control text-center" type="number" id="bulkTokenAmountInput" autocomplete="off" spellcheck="false" min="1" placeholder="Amount"></select>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-group-text" for="bulkTokenSize"><i class="bi-arrows-angle-expand"></i></label>
+                                <input class="form-control text-center" id="bulkTokenSize" type="number" autocomplete="off" spellcheck="false" value="1"> 
+                                <label class="input-group-text" for="bulkTokenGroup"><i class="bi-people-fill"></i></label>
+                                <input class="form-control text-center" type="number" id="bulkTokenGroup" autocomplete="off" spellcheck="false" placeholder="Group ID">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-group-text" for="bulkTokenHP"><i class="bi-heart-fill text-danger"></i></label>
+                                <input class="form-control text-center" id="bulkTokenHP" type="number" autocomplete="off" spellcheck="false" placeholder="HP"> 
+                                <label class="input-group-text" for="bulkTokenAC"><i class="bi-shield-shaded"></i></label>
+                                <input class="form-control text-center" id="bulkTokenAC" type="number" autocomplete="off" spellcheck="false" placeholder="AC">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-group-text" for="bulkTokenInit"><i class="bi-clock"></i></label>
+                                <input class="form-control text-center rounded-end" id="bulkTokenInit" type="number" autocomplete="off" spellcheck="false" placeholder="Fixed Init">
+                                <label class="input-group-text mx-1 rounded">or</label>
+                                <label class="input-group-text rounded-start" for="bulkTokenDex"><i class="bi-speedometer2"></i></label>
+                                <input class="form-control text-center" id="bulkTokenDex" type="number" autocomplete="off" spellcheck="false" placeholder="Dex mod">
+                            </div>
+                            
+                            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                                <input type="checkbox" class="btn-check" id="bulkTokenHideToken" autocomplete="off">
+                                <label class="btn btn-outline-secondary" for="bulkTokenHideToken"><i class="bi-eye-slash fs-5"></i>  Token</label>
+                                <input type="checkbox" class="btn-check" id="bulkTokenHideTracker" autocomplete="off">
+                                <label class="btn btn-outline-secondary" for="bulkTokenHideTracker"><i class="bi-eye-slash fs-5"></i>  Tracker</label>
+                                <input type="checkbox" class="btn-check" id="bulkTokenRollOnce" autocomplete="off">
+                                <label class="btn btn-outline-secondary" for="bulkTokenRollOnce"><i class="bi-dice-1 fs-5"></i> Roll Once</label>
+                                <input type="checkbox" class="btn-check" id="bulkTokenRollEach" autocomplete="off">
+                                <label class="btn btn-outline-secondary" for="bulkTokenRollEach"><i class="bi-dice-6 fs-5"></i> Roll For Each</label>
+                            </div>
+                            <button class="btn btn-outline-secondary" id="bulkTokenConfirm">Bulk Place</button>
+                        </div>
+                   </div>
+               </div>
+           </div>
+        </div>
+
+        <div id="notesBox" class="position-fixed" style="z-index: 10000;">
+            <div id="notesBoxCollapse" class="collapse">
+                <div class="card">
+                    <div class="card-header d-flex p-0">
+                        <div id="notesBoxHeader" class="text-center p-1 flex-fill">Notes</div>
+                        <button class="btn p-0 m-1" type="button" data-bs-toggle="collapse" data-bs-target="#notesBoxCollapse"><i class="bi-x-square fs-5"></i></button>
+                    </div>
+                   
+                   <div class="card-body p-0">
+                       <textarea id="notesBoxTextArea" style="resize: both;">Hello</textarea>
+                   </div>
+               </div>
+           </div>
+        </div>
+
+        <div id="mapOptionsMenuBox" class="position-fixed" style="z-index: 10000; left: 45%">
+            <div id="mapOptionsMenu" class="collapse">
+                <div class="card">
+                    <div class="card-header d-flex p-0">
+                        <div id="mapOptionsMenuHeader" class="text-center p-1 flex-fill">Map options</div>
+                        <button id="mapOptionsMenuClose" class="btn p-0 m-1" type="button" data-bs-toggle="collapse" data-bs-target="#mapOptionsMenu"><i class="bi-x-square fs-5"></i></button>
+                    </div>
+                   
+                    <div id="mapOptionsMenuBody" class="card-body p-0 d-flex flex-column gap-2 m-1">
+                        <div class="input-group">
+                            <label class="input-group-text" for="mapSelect">State</label>
+                            <select class="form-select text-center" id="mapSelect"></select>
+                            <button id="createNewMapButton" class="btn btn-outline-secondary"><i class="bi-plus fs-4"></i></button>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-group-text text-center" for="mapSource">Map Image</label>
+                            <select class="form-select" id="mapSource"></select>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-group-text" for="gridColorPicker">Grid color</label>
+                            <div class="form-control p-0">
+                                <input class="h-100 w-100" type="color" id="gridColorPicker" value="#222222">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-group-text" for="mapX">X</label>
+                            <input class="form-control text-center" id="mapX" type="number" inputmode="numeric">
+                            <label class="input-group-text" for="offsetX">Offset</label>
+                            <input class="form-control text-center" id="offsetX" type="number" inputmode="numeric">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-group-text" for="mapY">Y</label>
+                            <input class="form-control text-center" id="mapY" type="number" inputmode="numeric">
+                            <label class="input-group-text" for="offsetY">Offset</label>
+                            <input class="form-control text-center" id="offsetY" type="number" inputmode="numeric">
+                        </div>
+
+                        <button class="btn btn-outline-secondary" type="button" id="startGridAligner">Activate Grid Aligner</button>
+                        
+                        <div class="input-group">
+                            <label class="input-group-text" for="blockerType">Blocker type</label>
+                            <select class="form-select text-center" id="blockerType">
+                                <option value="0">Square</option>
+                                <option value="1">Poly</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-group-text" for="diagonalType">Diagonal Type</label>
+                            <select class="form-select text-center" id="diagonalType">
+                                <option value="5-10">Alternating 5-10</option>
+                                <option value="taxi">No diagonals (taxi)</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-group-text" for="systemSelect">System</label>
+                            <select class="form-select text-center" id="systemSelect">
+                                <option value="standard">Standard</option>
+                                <option value="4e">D&D 4e</option>
+                                <option value="13thAge">13th Age</option>
+                            </select>
+                        </div>
+
+                        <div class="btn-group">
+                            <button class="btn btn-outline-secondary" type="button" id="clearTokensButton">Clear Tokens</button>
+                            <button class="btn btn-outline-secondary" type="button" id="clearDrawingsButton">Clear Drawings</button>
+                            <button class="btn btn-outline-secondary" type="button" id="clearBlockersButton">Clear Blockers</button>
+                        </div>
+                        
+                        <button class="btn btn-outline-secondary" type="button" id="invertBlockerButton">Invert blockers</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="viewport" class="position-fixed h-100">
+            <div id="board" class="position-absolute">
+                <div id="polyBlockerHandles"></div>
+                <div id="newPolyBlockerHandles"></div>
+                <div id="shapeHandles"></div>
+                <div id="hAlignHandles"></div>
+                <div id="vAlignHandles"></div>
+
+                <canvas id="antiBlockerMap"></canvas>
+                <svg id="polyBlockers" xmlns="http://www.w3.org/2000/svg"></svg>
+                <div id="blockers"></div>
+
+                <div id="tokens"></div>
+                <svg id="shapeMap"></svg>
+                <img id="mapImage">
+                <canvas id="gridMap"></canvas>
+                <canvas id="hitboxMap"></canvas>
+                <ul id="contextMenu" class='custom-menu' oncontextmenu="event.preventDefault();"></ul>
+                <ul id="subContextMenu" class='custom-menu' oncontextmenu="event.preventDefault();"></ul>
+            </div>
+        </div>
+        <button id="sideMenuToggle" class="btn btn-outline-secondary bg-body-tertiary position-fixed px-0 py-2" type="button">
+            <i id="sideMenuToggleIcon" class="bi-arrow-bar-left"></i>
+        </button>
+        <div id="sideMenuCollapse">
+            <div class="position-fixed end-0 w-25 d-flex flex-column bg-body-tertiary" id="sideMenu" data-bs-backdrop="false" data-bs-backdrop="static" data-bs-scroll="false">
+                <div id="toggleButtonList" class="btn-group m-1">
+                    <button class="btn btn-outline-secondary" type="button" id="toggleGridButton" title="Toggle Grid (G)"><i class="bi-grid-3x3"></i></button>
+                    <button class="btn btn-outline-secondary" type="button" id="toggleSnapButton" title="Toggle Grid Snapping (S)"><i class="bi-magnet-fill"></i></button>
+                    <button class="btn btn-outline-secondary" type="button" id="colorPickerButton" title="Color picker (C)" data-bs-toggle="collapse" data-bs-target="#colorPicker"><i id="colorPickerPreview" class="bi-palette"></i></button>
+                    <button class="btn btn-outline-secondary dmOnly" type="button" id="quickPolyButton" title="Quick add polyblocker (P)"><i class="bi-bounding-box-circles"></i></button>
+                    <button class="btn btn-outline-secondary dmOnly" type="button" id="toggleBlockerEditing" title="Edit blockers (B)"><i class="bi-tools"></i></button>
+                    <button class="btn btn-outline-secondary dmOnly" type="button" id="togglePlayerMode" title="Toggle player mode (M)"><i class="bi-person-circle"></i></button>
+                    <button class="btn btn-outline-secondary dmOnly" type="button" id="toggleSettingsButton" title="DM Settings" data-bs-toggle="collapse" data-bs-target="#mapOptionsMenu"><i class="bi-gear"></i></button>
+                </div>
+    
+                <div id="colorPicker" class="accordion-collapse collapse">
+                    <div class="border-top border-bottom">
+                        <div class="d-flex flex-column gap-1 m-1">
+                            <div class="input-group">
+                                <span class="input-group-text bg-danger">R</span>
+                                <div class="form-control">
+                                    <input type="range" class="form-range" id="redSlider" min="0" max="255" value="255">
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text bg-success">G</span>
+                                <div class="form-control">
+                                    <input type="range" class="form-range" id="greenSlider" min="0" max="255" value="0">
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text bg-primary">B</span>
+                                <div class="form-control">
+                                    <input type="range" class="form-range" id="blueSlider" min="0" max="255" value="0">
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text bg-secondary">A</span>
+                                <div class="form-control">
+                                    <input type="range" class="form-range text-secondary" id="opacitySlider" min="0.5" max="1" step="0.01" value="1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="m-1" id="initiativeTracker">
+                    <div id="initiativeHeader" class="d-flex gap-2 my-1 dmOnly">
+                        <div class="form-floating flex-fill">
+                            <input class="form-control" type="text" id="initSearch" placeholder="" autocomplete="off" spellcheck="false">
+                            <label for="initSearch" class="text-secondary">Name Search</label>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-outline-secondary" id="sortTracker"><i class="bi-sort-down fs-5"></i></button>
+                            <button class="btn btn-outline-secondary" id="openBulkGenerator" data-bs-toggle="collapse" data-bs-target="#bulkTokenBoxCollapse"><i class="bi-plus fs-5"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div id="initiativeTrackerDiv" class="d-flex flex-column gap-2 p-1" style="overflow-y: auto;">
+                </div>
+                
+                <div class="border-top mt-auto bg-body-secondary" id="detailsScreen">
+                    <div class="d-flex flex-column gap-1 m-1">
+                        <div class="d-flex gap-1">
+                            <div class="ratio-1x1 w-25">
+                                <img class="img-fluid" id="detailsIcon" src="public/blankToken.png">
+                            </div>
+                            <div class="d-flex flex-column gap-1 flex-fill">
+                                <div class="input-group flex-fill">
+                                    <label class="input-group-text" for="detailsNameInput"><i class="bi-person-fill"></i></label>
+                                    <input class="form-control" type="text" id="detailsNameInput" autocomplete="off" spellcheck="false" placeholder="Name" tabindex="1">
+                                </div>
+                                <div class="input-group flex-fill">
+                                    <label class="input-group-text" for="detailsInitiative"><i class="bi-clock"></i></label>
+                                    <input class="form-control text-center" type="number" id="detailsInitiative" autocomplete="off" spellcheck="false" tabindex="2" placeholder="Initiative">
+                                    <label class="input-group-text" for="detailsGroup"><i class="bi-people-fill"></i></label>
+                                    <input class="form-control text-center" type="number" id="detailsGroup" autocomplete="off" spellcheck="false" tabindex="6" placeholder="Group">
+                                </div>        
+                            </div>
+                        </div>
+                        <div id="detailsHitpoints" class="input-group">
+                            <label id="hitpointsIcon" class="input-group-text" role="button"><i class="bi-heart-fill text-danger"></i></label>
+                            <input class="form-control text-center" id="currentHitpoints" type="number" autocomplete="off" spellcheck="false" tabindex="3" placeholder="Current"> 
+                            <input class="form-control text-center" id="maxHitpoints" type="number" autocomplete="off" spellcheck="false" tabindex="4" placeholder="Max">
+                            <label class="input-group-text" for="armorClass"><i class="bi-shield-shaded"></i></label>
+                            <input class="form-control text-center" id="armorClass" type="number" autocomplete="off" spellcheck="false" tabindex="5" placeholder="AC">
+                        </div>
+                        <div id="AC13thAge" class="input-group" style="display: none;">
+                            <label class="input-group-text" for="mentalDef"><i class="bi-shield-shaded text-info"></i></label>
+                            <input class="form-control text-center" id="mentalDef" type="number" autocomplete="off" spellcheck="false" tabindex="5" placeholder="MD">
+                            <label class="input-group-text" for="physicalDef"><i class="bi-shield-shaded text-warning"></i></label>
+                            <input class="form-control text-center" id="physicalDef" type="number" autocomplete="off" spellcheck="false" tabindex="5" placeholder="PD">
+                        </div>
+                        <div id="AC4e" class="input-group" style="display: none;">
+                            <label class="input-group-text" for="refDef"><i class="bi-shield-shaded text-warning"></i></label>
+                            <input class="form-control text-center" id="refDef" type="number" autocomplete="off" spellcheck="false" tabindex="5" placeholder="Ref">
+                            <label class="input-group-text" for="fortDef"><i class="bi-shield-shaded text-success"></i></label>
+                            <input class="form-control text-center" id="fortDef" type="number" autocomplete="off" spellcheck="false" tabindex="5" placeholder="Fort">
+                            <label class="input-group-text" for="willDef"><i class="bi-shield-shaded text-info"></i></label>
+                            <input class="form-control text-center" id="willDef" type="number" autocomplete="off" spellcheck="false" tabindex="5" placeholder="Will">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-group-text" for="detailsStatusInput"><i class="bi-person-lines-fill"></i></label>
+                            <input class="form-control" type="text" id="detailsStatusInput" placeholder="Status" autocomplete="off" spellcheck="false" tabindex="7">
+                        </div>
+                        <div id="notesEditor" class="collapse">
+                            <div class="d-flex column-gap-1">
+                                <textarea id="notesTextArea" class="form-control flex-fill" placeholder="Enter your notes here..." style="resize: none;"></textarea>
+                                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#notesBoxCollapse"><i class="bi-arrow-up-left-square"></i></button>
+                            </div>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-outline-secondary" id="concentrating" title="Toggle concentration" tabindex="9"><i class="bi-c-circle fs-5"></i></button>
+                            <button class="btn btn-outline-secondary dmOnly" id="visibility" title="Toggle visibility of token in initiative tracker" tabindex="8"><i class="bi-eye-fill fs-5"></i></button>
+                            <button class="btn btn-outline-secondary" id="openNotes" title="Open notes" tabindex="10" data-bs-toggle="collapse" data-bs-target="#notesEditor"><i class="bi-pencil-square fs-5"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="map.js" type="module"></script>
+        <iframe style="display:none;" id="hiddenFrame"></iframe>
+    </body>
+</html>

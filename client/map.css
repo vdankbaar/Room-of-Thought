@@ -1,0 +1,247 @@
+:root {
+    --blocker-color: rgb(0, 0, 0);
+    --antiBlocker-color: rgb(0, 0, 0);
+    --token-index: 4;
+    --sidemenu-width: 12vw;
+
+    --sidemenu-color: #23232e;
+    --sidemenu-text-color: lightgray;
+    --toggle-highlighted-color: #54aeeb;
+    --input-color: #14141c;
+}
+
+/* #region Non Sidebar */
+body {
+    margin: 0px;
+    background-color: rgb(53, 53, 53);
+    z-index: -2;
+}
+
+body p {user-select: none;}
+body label {user-select: none;}
+body a {user-select: none;}
+body h3 {user-select: none;}
+
+.ping {
+    position: absolute;
+    transform-origin: center;
+    pointer-events: none;
+    z-index: 9999;
+    animation: pulse 1s infinite;
+    width: 2vw;
+    height: 2vw;
+    background-color: transparent;
+    border-radius: 50%;
+    border: 0.2vw solid red;
+}
+
+@keyframes pulse {
+    0% {border: 0.2vw solid red; width: 2vw; height: 2vw;}
+    50% {border: 0.3vw solid orange; width: 2.5vw; height: 2.5vw;}
+    100% {border: 0.2vw solid red; width: 2vw; height: 2vw;}
+}
+
+#antiBlockerMap {
+    pointer-events: none;
+    z-index: 500;
+    position: absolute;
+}
+
+#polyBlockers {
+    pointer-events: none;
+    position: absolute;
+    z-index: 500;
+}
+
+.polyBlockerHandle {
+    z-index: 5001;
+    border-radius: 50%;
+    cursor: grab;
+    position: absolute;
+    width: 0.7vw;
+    height: 0.7vw;
+    background-color: violet;
+}
+
+.newPolyBlockerHandle {
+    z-index: 5001;
+    border-radius: 50%;
+    cursor: grab;
+    position: absolute;
+    width: 0.7vw;
+    height: 0.7vw;
+    background-color: red;
+}
+
+.shapeHandle {
+    z-index: 5001;
+    border-radius: 50%;
+    cursor: grab;
+    position: absolute;
+    width: 0.5vw;
+    height: 0.5vw;
+    background-color: violet;
+}
+
+.polyBlocker {
+    pointer-events: visiblePainted;
+    z-index: 500;
+    overflow: hidden;
+    fill: rgba(0,0,0,0);
+}
+
+#board {
+    transform-origin: top left;
+}
+
+#viewport {
+    overflow: auto;
+}
+
+#shapeMap {
+    pointer-events: none;
+    position: absolute;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    margin: 0px;
+    padding: 0px;
+    z-index: 441;
+}
+
+#mapImage {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    z-index: 0;
+}
+
+#gridMap {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    margin: 0px;
+    padding: 0px;
+}
+/* #endregion */
+
+/* #region Side Menu */
+#sideMenu {
+    height: 100vh;
+    z-index: 9999;
+    user-select: none;
+}
+/* #endregion */
+
+/* #region Initiative Tracker */
+#sideMenu p {
+    margin: 0px;
+    font-size: 0.8vw;
+    font-family: Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
+}
+/* #endregion */
+
+/* #region Details Screen */
+
+#detailsIcon img {user-select: none;}
+
+#hitpointsIcon {cursor:pointer}
+/* #endregion */
+
+.blocker {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    z-index: 500;
+    overflow: hidden;
+}
+
+.blocker div:not(.blocker){
+    z-index: inherit;
+}
+
+#tokens div {
+    -webkit-user-drag: none;
+    user-select: none;
+    position: absolute;
+    display: flex;
+}
+
+.token a {
+    text-align: center;
+    position: absolute;
+    pointer-events: none;
+    align-self: center;
+}
+
+.hiddenToken {
+    position: absolute;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.linkImage {
+    position: absolute;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.concentratingText {
+    position: absolute;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.custom-menu {
+    margin: 0px;
+    overflow-y: overlay;
+    overflow-x: hidden;
+    width: 10vw;
+    height: 24vh;
+    display: none;
+    z-index: 10003;
+    position: absolute;
+    border: 0.25vw solid rgb(100, 100, 100);
+    white-space: nowrap;
+    font-family: sans-serif;
+    background: rgb(50, 50, 50);
+    color: rgb(128, 128, 128);
+    border-radius: 0.25vw;
+    list-style: none;
+    padding: 0px;
+}
+
+.custom-menu::-webkit-scrollbar {
+    width: 0.5vw;
+}
+
+.custom-menu::-webkit-scrollbar-track {
+    opacity: 0;
+}
+
+.custom-menu::-webkit-scrollbar-thumb {
+    border-radius: 1vh;
+    background: #c2c9d2;
+}
+
+.custom-menu-element:hover {
+    background-color: rgb(75, 75, 75);
+}
+
+.custom-menu-element {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1vw;
+    cursor: pointer;
+    
+    width: 10vw;
+    height: 4vh;
+}
