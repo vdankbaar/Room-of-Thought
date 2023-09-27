@@ -1,8 +1,7 @@
-data/
-client/public/dmTokens
-client/public/tokens
-client/public/maps
-client/public/export
+data/*
+client/public/dmTokens/*
+client/public/tokens/*
+client/public/maps/*
 
 # Logs
 logs
