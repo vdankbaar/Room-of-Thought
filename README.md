@@ -1,4 +1,4 @@
-# Room-of-Thought (RoT)
+# Room of Thought (RoT)
  A simple selfhostable virtual tabletop simulator.
 
 # Important directories
