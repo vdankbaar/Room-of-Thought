@@ -28,4 +28,5 @@
  To be able to run the code directly from this repo you will need to make sure there exists:
  * A 'currentSettings.json' json file in /data for the server to initialize with
  * A 'White.png' map in /client/public/maps for use in the json file above
+
  Alternatively just download one of the releases and use that if you do not plan on modifying anything
