@@ -1859,6 +1859,7 @@ function drawToken(token:Token) {
 
     draggableElement(tokenContainer, true, (e) => {
         if (e.ctrlKey || e.metaKey) { flag.controlPressed = true; }
+        blurUI();
         selectedToken = token.id;
         selectedBlocker = '0-0-0-0-0';
         selectedShapeId = '0-0-0-0-0';
@@ -2065,18 +2066,47 @@ function DetailsToggleButtonsUpdate(concentrating:boolean|undefined, hide:boolea
 //#endregion
 
 //#region Menu events
+function blurUI() {
+    $UI.nameInput.blur();
+    $UI.initiativeInput.blur();
+    $UI.groupIdInput.blur();
+    $UI.currentHpInput.blur();
+    $UI.maxHpInput.blur();
+    $UI.acInput.blur();
+    $UI.statusInput.blur();
+    $UI.noteArea.blur();
+}
+
 function SyncSideMenu() {
     $UI.sideMenuCollapse.style.display = sideMenuExpanded ? "" : "none";
     $UI.sideMenuToggleIcon.classList.toggle('bi-arrow-bar-left', !sideMenuExpanded);
     $UI.sideMenuToggleIcon.classList.toggle('bi-arrow-bar-right', sideMenuExpanded);
-    $UI.viewport.style.width = `calc(100% - ${$UI.sideMenu.offsetWidth}px)`;
-    $UI.sideMenuToggle.style.right = sideMenuExpanded ? `${$UI.sideMenu.offsetWidth}px` : '0px';
+    $UI.viewport.style.width = `${100*(window.innerWidth - $UI.sideMenu.offsetWidth) / window.innerWidth}%`
+    $UI.sideMenuToggle.style.left = sideMenuExpanded ? `${100*(window.innerWidth - $UI.sideMenu.offsetWidth - $UI.sideMenuToggle.offsetWidth) / window.innerWidth}%` : `${100*(window.innerWidth - $UI.sideMenuToggle.offsetWidth) / window.innerWidth}%`
+    if ($UI.sideMenuToggle.offsetTop < 0) {
+        $UI.sideMenuToggle.style.top = "0px";
+    }
+    if ($UI.sideMenuToggle.offsetTop + $UI.sideMenuToggle.offsetHeight > window.innerHeight) {
+        $UI.sideMenuToggle.style.top = `${window.innerHeight - $UI.sideMenuToggle.offsetHeight}px`;
+    }
 }
 
-$UI.sideMenuToggle.onclick = () => {
-    sideMenuExpanded = !sideMenuExpanded;
+let sidemenuX = 0;
+draggableElement($UI.sideMenuToggle, true, (e) => {
+    sidemenuX = e.clientX;
+}, (e) => {
+    const newSidemenuX = e.clientX;
+    if (newSidemenuX === sidemenuX) {
+        sideMenuExpanded = !sideMenuExpanded;
+        SyncSideMenu();
+    }
+    sidemenuX = newSidemenuX;
+    }
+, (e) => {
+    const newSidemenuX = e.clientX;
+    $UI.sideMenu.style.width = `${100*(window.innerWidth - newSidemenuX) / window.innerWidth}%`
     SyncSideMenu();
-}
+}, undefined, undefined, undefined, false);
 
 $UI.sortTracker.onclick = () => {
     socket.emit("sortTracker");
