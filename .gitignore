@@ -1,7 +1,3 @@
-client/public/dmTokens/*
-client/public/tokens/*
-client/public/maps/*
-
 # Logs
 logs
 *.log
